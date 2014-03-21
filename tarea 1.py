@@ -3,12 +3,12 @@ import json
 from datetime import datetime
 
 ######facebook target user data#####
-token = 'CAACEdEose0cBAP4jD9MqkH5dXSU5zDAkkxDZBXbZAEseZBaJT4SpkmpQeBLp5PVEJEHcRVUblCmbrfQLZBDzLvczsJbd8U2RsLZBPnAt3tOrlY14XnmjprRZAHjGpYnUD64Y2UGV1QGZCmoFkShBkWtvClxFUanpMN9JQSbV0jhmZBKitYXNKGakvTqOA1JtxB8ZD'
+token = 'CAACEdEose0cBAFmXZAv8Oh0OLYDbwCCe3UubQSZAktIQlZC8dbt3ZCI430WjOWmjZAZCnkeySUMPVagyF0mDAQHZAUuKtWOz6r9GsFK9GtIIca5ZAgBomG19gP4MHTdus3DpwKyQbVOZBZAr4ws36nAopCdIpZAemYnzgZCcFPdGHAHM7M0tgJ0Csq3cYQtZCPKiC2UQZD'
 _id = '815626504'
 ####################################
 
 def load_facebook_page(facebook_id, token):
-    url = 'https://graph.facebook.com/' + facebook_id + '?fields=friends.fields(id,name,birthday,gender,hometown,languages,relationship_status),name,picture.width(300).height(300)&method=GET&format=json&suppress_http_code=1&access_token=' + token
+    url = 'https://graph.facebook.com/' + facebook_id + '?fields=friends.fields(id,name,birthday,gender,hometown,languages,relationship_status),name,last_name,picture.width(300).height(300)&method=GET&format=json&suppress_http_code=1&access_token=' + token
     #print (url)
     return (urllib.request.urlopen(url)).read().decode("utf-8")
 
@@ -16,7 +16,6 @@ def load_facebook_page(facebook_id, token):
 data =  (load_facebook_page(_id,token))
 j = json.loads(data)
 #print (j['friends']['data'][0])
-
 
 
 age = []
@@ -68,9 +67,6 @@ for i in age:
 ageaverage /= len(age)
 ageaverage = (ageaverage.__round__(2))
 
-
-
-
 #creating file
 
 file = {}
@@ -93,7 +89,13 @@ file['friends']['relationship_status'] = relationship_status
 file['name'] = j['name']
 file['picture'] = {'height': j['picture']['data']['height'], 'width':j['picture']['data']['width'], 'url':j['picture']['data']['url']}
 
-f = open('JMontes.json', 'w')
+
+#Exporting the created file
+if j['last_name'].find(' ') == -1:
+    name = file['name'][0] + j['last_name']
+else:
+    name = file['name'][0] + j['last_name'][:j['last_name'].find(' ')]
+f = open(name + '.json', 'w')
 f.write(json.dumps(file, indent=4))
 f.close()
 
