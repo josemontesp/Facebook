@@ -2,15 +2,15 @@ import urllib.request
 import json
 from datetime import datetime
 
-######facebook target user data#####
-token = 'CAACEdEose0cBAFmXZAv8Oh0OLYDbwCCe3UubQSZAktIQlZC8dbt3ZCI430WjOWmjZAZCnkeySUMPVagyF0mDAQHZAUuKtWOz6r9GsFK9GtIIca5ZAgBomG19gP4MHTdus3DpwKyQbVOZBZAr4ws36nAopCdIpZAemYnzgZCcFPdGHAHM7M0tgJ0Csq3cYQtZCPKiC2UQZD'
+######facebook target user info#####
+token = 'CAACEdEose0cBAAo9difNDc6zZA6pR9LZAilgM0B9LA8VQ5E0poX70ZCf1Eo5EqDoY8FcoRp1KSeeuj3p3cqGKYC3iOPnmmAT4Fm7Lw3fVuMx9s3lc1mWooBNP6ogsqwlW8gDmeerfIKpcFEad0I1iwHZCR4rXDMnrU1oTnPZCT1eiEZCn5hbdIL8omPKs7YSMZD'
 _id = '815626504'
 ####################################
 
 def load_facebook_page(facebook_id, token):
-    url = 'https://graph.facebook.com/' + facebook_id + '?fields=friends.fields(id,name,birthday,gender,hometown,languages,relationship_status),name,last_name,picture.width(300).height(300)&method=GET&format=json&suppress_http_code=1&access_token=' + token
+    url = 'https://graph.facebook.com/' + facebook_id + '?fields=friends.fields(id,name,birthday,gender,hometown,languages,relationship_status),name,last_name,picture.width(400).height(400)&method=GET&format=json&suppress_http_code=1&access_token=' + token
     #print (url)
-    return (urllib.request.urlopen(url)).read().decode("utf-8")
+    return (urllib.request.urlopen(url)).read().decode("latin-1")
 
 
 data =  (load_facebook_page(_id,token))
